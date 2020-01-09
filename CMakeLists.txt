@@ -6,4 +6,10 @@ add_subdirectory(Hazel)
 
 add_subdirectory(Sandbox)
 
+add_dependencies(Sandbox Hazel)
+
+if (WIN32)
+	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Sandbox)
+endif()
+
 # target_link_libraries(Sandbox Hazel)
