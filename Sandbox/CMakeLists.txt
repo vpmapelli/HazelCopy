@@ -39,6 +39,6 @@ elseif(UNIX)
 	add_custom_command(
 			TARGET ${PROJECT_NAME} PRE_BUILD              							# Adds a pre-build event to Sandbox
 			COMMAND ${CMAKE_COMMAND} -E copy_if_different  							# which executes "cmake - E copy_if_different..."
-			"${PROJECT_SOURCE_DIR}/../bin/$<CONFIG>/$<PLATFORM_ID>/Hazel/Hazel.so"  # <--this is in-file
+			"${PROJECT_SOURCE_DIR}/../bin/$<CONFIG>/$<PLATFORM_ID>/Hazel/libHazel.so"  # <--this is in-file
 			$<TARGET_FILE_DIR:${PROJECT_NAME}>)                 					# <--this is out-file path
 endif()
