@@ -12,3 +12,12 @@ _deps
 
 .vscode/
 bin/
+
+build/
+
+.vs/
+*.vcxproj*
+*.filters
+*.sln
+x64/
+*.dir

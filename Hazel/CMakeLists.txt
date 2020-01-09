@@ -33,9 +33,3 @@ set_target_properties(${PROJECT_NAME}
   LIBRARY_OUTPUT_DIRECTORY "${OUTPUT_DIR}/${PROJECT_NAME}"
   CXX_STANDARD              17
 )
-
-add_custom_command(
-        TARGET ${PROJECT_NAME} POST_BUILD              # Adds a post-build event to MyTest
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
-        $<TARGET_FILE:${PROJECT_NAME}>                                                # <--this is in-file
-        "${PROJECT_SOURCE_DIR}/../bin/$<CONFIG>/$<PLATFORM_ID>/Sandbox")                 # <--this is out-file path
