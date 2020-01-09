@@ -16,8 +16,8 @@ bin/
 build/
 
 .vs/
-*.vcxproj*
-*.filters
-*.sln
-x64/
-*.dir
+#*.vcxproj*
+#*.filters
+#*.sln
+#x64/
+#*.dir
