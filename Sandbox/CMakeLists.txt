@@ -11,7 +11,7 @@ file (GLOB header_files "${source_dir}/*.h")
 
 target_sources(${PROJECT_NAME} PRIVATE ${source_files} ${header_files})
 
-#INCLUDES
+#INCLUDE DIRS
 target_include_directories(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/../Hazel/src/")
 
 #LINKING
