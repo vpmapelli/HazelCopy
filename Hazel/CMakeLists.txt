@@ -8,11 +8,14 @@ add_library(${PROJECT_NAME} SHARED)
 #FILES
 set (source_dir "${PROJECT_SOURCE_DIR}/src/${PROJECT_NAME}")
 file (GLOB source_files "${source_dir}/*.cpp")
-file (GLOB header_files "${source_dir}/*.h")
+file (GLOB header_files "${source_dir}/*.h"
+                        "${source_dir}/Events/*.h")
 
-target_sources(${PROJECT_NAME} PRIVATE ${source_files} ${header_files})
+
+target_sources(${PROJECT_NAME} PRIVATE ${source_files} ${header_files} ${events_header_files})
 
 #INCLUDE DIRS
+target_include_directories(${PROJECT_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/src/")
 target_include_directories(${PROJECT_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/vendor/spdlog/include/")
 
 #DEFINITIONS
