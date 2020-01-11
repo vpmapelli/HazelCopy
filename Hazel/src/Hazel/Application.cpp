@@ -5,8 +5,6 @@
 #include "Hazel/Events/ApplicationEvent.h"
 #include "Hazel/Log.h"
 
-#include <iostream>
-
 namespace Hazel {
 
         Application::Application() 

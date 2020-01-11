@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.16)
 
 project(Hazel LANGUAGES CXX)
 
@@ -13,6 +13,9 @@ file (GLOB header_files "${source_dir}/*.h"
 
 
 target_sources(${PROJECT_NAME} PRIVATE ${source_files} ${header_files} ${events_header_files})
+
+#PRECOMPILED HEADERS (cmake automatic includes to all source files, only available from 3.16)
+target_precompile_headers(${PROJECT_NAME} PRIVATE [["hzpch.h"]])
 
 #INCLUDE DIRS
 target_include_directories(${PROJECT_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/src/")

@@ -2,9 +2,6 @@
 
 #include "Hazel/Core.h"
 
-#include <string>
-#include <functional>
-
 namespace Hazel {
 
 #if defined(HZ_PLATFORM_WINDOWS)
