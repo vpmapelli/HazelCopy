@@ -43,7 +43,16 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 add_subdirectory("${PROJECT_SOURCE_DIR}/vendor/GLFW")
 
 target_link_libraries(Hazel PRIVATE glfw)
-target_link_libraries(Hazel PUBLIC -lGL) #adding a hardcoded version for the time being
+
+if (WIN32)
+    set_target_properties(${PROJECT_NAME} PROPERTIES MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+    find_package(OpenGL REQUIRED)
+    target_include_directories(${PROJECT_NAME} PUBLIC ${OPENGL_INCLUDE_DIR})
+    target_link_libraries(${PROJECT_NAME} PUBLIC ${OPENGL_gl_LIBRARY})
+endif()
+if(UNIX AND NOT APPLE)
+    target_link_libraries(Hazel PUBLIC -lGL) #adding a hardcoded version for the time being
+endif()
 
 set(OUTPUT_DIR "${CMAKE_SOURCE_DIR}/bin/$<CONFIG>/$<PLATFORM_ID>")
 

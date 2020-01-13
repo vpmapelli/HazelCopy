@@ -30,6 +30,8 @@ set_target_properties(${PROJECT_NAME}
 )
 
 if (WIN32)
+    set_target_properties(${PROJECT_NAME} PROPERTIES MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
 	add_custom_command(
 			TARGET ${PROJECT_NAME} PRE_BUILD              							 # Adds a pre-build event to Sandbox
 			COMMAND ${CMAKE_COMMAND} -E copy_if_different  							 # which executes "cmake - E copy_if_different..."
