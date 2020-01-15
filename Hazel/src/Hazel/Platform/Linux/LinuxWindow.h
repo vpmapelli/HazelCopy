@@ -1,11 +1,9 @@
 #pragma once
 
 #include "Hazel/Window.h"
-
-#include <GLFW/glfw3.h>
+class GLFWwindow; //forward declaration
 
 namespace Hazel {
-
     class LinuxWindow : public Window
     {
     public:

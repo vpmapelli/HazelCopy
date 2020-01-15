@@ -1,7 +1,7 @@
 #include "Application.h"
 #include "Hazel/Log.h"
 
-#include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 #include "Hazel/Events/Event.h"
 #include "Hazel/Events/KeyEvent.h"
