@@ -6,3 +6,6 @@
 	branch = 3.3-stable
 	path = Hazel/vendor/GLFW
 	url = https://github.com/glfw/glfw
+[submodule "Hazel/vendor/imgui"]
+	path = Hazel/vendor/imgui
+	url = https://github.com/ocornut/imgui

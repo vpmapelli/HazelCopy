@@ -20,6 +20,12 @@ if(UNIX AND NOT APPLE)
   target_sources(${PROJECT_NAME} PRIVATE "${source_dir}/Platform/Linux/LinuxWindow.cpp")
 endif()
 
+target_sources(${PROJECT_NAME} PRIVATE "${source_dir}/ImGui/ImGuiLayer.cpp"
+                                        "${source_dir}/ImGui/ImGuiLayer.h")
+
+target_sources(${PROJECT_NAME} PRIVATE "${source_dir}/Platform/OpenGL/ImGuiOpenGLRenderer.cpp"
+                                        "${source_dir}/Platform/OpenGL/ImGuiOpenGLRenderer.h")
+
 #PRECOMPILED HEADERS (cmake automatic includes to all source files, only available from 3.16)
 target_precompile_headers(${PROJECT_NAME} PUBLIC [["hzpch.h"]])
 
@@ -31,6 +37,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/vendor/
 target_compile_definitions(${PROJECT_NAME} PRIVATE "HZ_PLATFORM_$<UPPER_CASE:$<PLATFORM_ID>>")
 target_compile_definitions(${PROJECT_NAME} PRIVATE "HZ_$<UPPER_CASE:$<CONFIG>>")
 target_compile_definitions(${PROJECT_NAME} PRIVATE HZ_BUILD_DLL)
+target_compile_definitions(${PROJECT_NAME} PRIVATE IMGUI_IMPL_OPENGL_LOADER_GLAD)
 
 # add_custom_target(print
 #         ${CMAKE_COMMAND} -E echo "${CMAKE_BINARY_DIR}/bin/$<CONFIG>/"
@@ -46,6 +53,10 @@ target_link_libraries(Hazel PRIVATE glfw)
 #GLAD
 add_subdirectory("${PROJECT_SOURCE_DIR}/vendor/glad")
 target_link_libraries(Hazel PRIVATE glad)
+
+#imgui
+add_subdirectory("${PROJECT_SOURCE_DIR}/vendor/imgui")
+target_link_libraries(Hazel PRIVATE imgui)
 
 if (WIN32)
     set_target_properties(${PROJECT_NAME} PROPERTIES MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
