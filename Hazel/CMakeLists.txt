@@ -15,9 +15,11 @@ target_sources(${PROJECT_NAME} PRIVATE ${source_files} ${header_files} ${events_
 
 if(WIN32)
   target_sources(${PROJECT_NAME} PRIVATE "${source_dir}/Platform/Windows/WindowsWindow.cpp")
+  target_sources(${PROJECT_NAME} PRIVATE "${source_dir}/Platform/Windows/WindowsInput.cpp")
 endif()
 if(UNIX AND NOT APPLE)
   target_sources(${PROJECT_NAME} PRIVATE "${source_dir}/Platform/Linux/LinuxWindow.cpp")
+  target_sources(${PROJECT_NAME} PRIVATE "${source_dir}/Platform/Linux/LinuxInput.cpp")
 endif()
 
 target_sources(${PROJECT_NAME} PRIVATE "${source_dir}/ImGui/ImGuiLayer.cpp"

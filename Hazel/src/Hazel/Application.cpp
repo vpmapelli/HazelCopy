@@ -2,14 +2,17 @@
 #include "Hazel/Log.h"
 
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
-#include "Hazel/Events/Event.h"
 #include "Hazel/Events/KeyEvent.h"
 #include "Hazel/Events/MouseEvent.h"
 #include "Hazel/Events/ApplicationEvent.h"
 
 #include "Hazel/Layer.h"
 #include "Hazel/LayerStack.h"
+
+#include "Input.h"
+
 namespace Hazel {
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
@@ -71,6 +74,21 @@ namespace Hazel {
 
                 for (Layer* layer : m_LayerStack)
                     layer->OnUpdate();
+
+                auto[x, y] = Input::GetMousePosition();
+                HZ_CORE_TRACE("{0}, {1}", x, y);
+
+                float xPos = Input::GetMouseX();
+                HZ_CORE_TRACE("{0}", xPos);
+    
+                float yPos = Input::GetMouseY();
+                HZ_CORE_TRACE("{0}", yPos);
+
+                bool keyPress = Input::IsKeyPressed(GLFW_KEY_S);
+                HZ_CORE_TRACE("{0}", keyPress);
+                
+                bool mousePress = Input::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1);
+                HZ_CORE_TRACE("{0}", mousePress);
                 
                 m_Window->OnUpdate();
             };   
