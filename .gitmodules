@@ -7,5 +7,6 @@
 	path = Hazel/vendor/GLFW
 	url = https://github.com/glfw/glfw
 [submodule "Hazel/vendor/imgui"]
+	branch = v1.74withCMake
 	path = Hazel/vendor/imgui
-	url = https://github.com/ocornut/imgui
+	url = https://github.com/vpmapelli/imgui
