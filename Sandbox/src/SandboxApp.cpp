@@ -23,6 +23,8 @@ public:
     ExampleLayer()
         : Layer("Example")
     {
+        auto cam = camera(0.5f, {0.5f, 0.5f});
+        cam = cam+cam;
     }
 
     void OnUpdate() override
@@ -51,7 +53,6 @@ public:
         Sandbox()
         {
             PushLayer(new ExampleLayer());
-            PushOverlay(new Hazel::ImGuiLayer());
         }
 
         ~Sandbox()

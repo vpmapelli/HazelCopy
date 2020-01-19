@@ -29,6 +29,10 @@ set_target_properties(${PROJECT_NAME}
   CXX_STANDARD              17
 )
 
+if(CMAKE_BUILD_TYPE MATCHES DEBUG)
+
+endif()
+
 if (WIN32)
     set_target_properties(${PROJECT_NAME} PROPERTIES MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
@@ -38,6 +42,7 @@ if (WIN32)
 			"${PROJECT_SOURCE_DIR}/../bin/$<CONFIG>/$<PLATFORM_ID>/Hazel/Hazel.dll"  # <--this is in-file
 			"$<TARGET_FILE_DIR:${PROJECT_NAME}>/")                 				 	 # <--this is out-file path
 elseif(UNIX)
+	target_compile_options(${PROJECT_NAME} PRIVATE "$<$<CONFIG:DEBUG>:-O0>")
 	add_custom_command(
 			TARGET ${PROJECT_NAME} PRE_BUILD              							# Adds a pre-build event to Sandbox
 			COMMAND ${CMAKE_COMMAND} -E copy_if_different  							# which executes "cmake - E copy_if_different..."
