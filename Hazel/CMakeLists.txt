@@ -60,6 +60,11 @@ target_link_libraries(Hazel PRIVATE glad)
 add_subdirectory("${PROJECT_SOURCE_DIR}/vendor/imgui")
 target_link_libraries(Hazel PRIVATE imgui)
 
+#glm
+add_subdirectory("${PROJECT_SOURCE_DIR}/vendor/glm")
+target_link_libraries(Hazel PUBLIC glm)
+#making it public since we are using as a header library. It automatically includes in Sandbox 
+
 if (WIN32)
     set_target_properties(${PROJECT_NAME} PROPERTIES MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
     # find_package(OpenGL REQUIRED)
