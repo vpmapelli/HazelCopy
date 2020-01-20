@@ -72,8 +72,9 @@ namespace Hazel {
     {
         ImGuiIO& io = ImGui::GetIO();
         Application& app = Application::Get();
+        GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
         io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
-        // Rendering
+        // // Rendering
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     	
