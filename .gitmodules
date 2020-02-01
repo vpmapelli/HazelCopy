@@ -7,7 +7,7 @@
 	path = Hazel/vendor/GLFW
 	url = https://github.com/glfw/glfw
 [submodule "Hazel/vendor/imgui"]
-	branch = v1.74withCMake
+	branch = dockingCMake
 	path = Hazel/vendor/imgui
 	url = https://github.com/vpmapelli/imgui
 [submodule "Hazel/vendor/glm"]
