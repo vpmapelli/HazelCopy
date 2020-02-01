@@ -8,7 +8,7 @@ add_subdirectory(Sandbox)
 
 add_dependencies(Sandbox Hazel)
 
-if (WIN32)
+if (MSVC)
 	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Sandbox)
 endif()
 

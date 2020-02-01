@@ -15,10 +15,10 @@ target_include_directories(${PROJECT_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/include
 
 #LINKING
 if(UNIX AND NOT APPLE)
-target_link_libraries(${PROJECT_NAME} PUBLIC -ldl)
+    target_link_libraries(${PROJECT_NAME} PUBLIC -ldl)
 endif()
 if (WIN32)
-set_target_properties(${PROJECT_NAME} PROPERTIES MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+    set_target_properties(${PROJECT_NAME} PROPERTIES MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
 
 # message(STATUS "GLAD $<$<CONFIG:Debug>:Debug>")

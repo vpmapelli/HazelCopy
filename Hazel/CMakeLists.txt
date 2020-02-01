@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 
 project(Hazel LANGUAGES CXX)
 
-add_library(${PROJECT_NAME} SHARED)
+add_library(${PROJECT_NAME} STATIC)
 
 
 #FILES
@@ -47,6 +47,9 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE HZ_BUILD_DLL)
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+if (MSVC)
+  set(USE_MSVC_RUNTIME_LIBRARY_DLL OFF CACHE BOOL "" FORCE)
+endif()
 
 add_subdirectory("${PROJECT_SOURCE_DIR}/vendor/GLFW")
 target_link_libraries(Hazel PRIVATE glfw)
@@ -66,6 +69,7 @@ target_link_libraries(Hazel PUBLIC glm)
 
 if (WIN32)
     set_target_properties(${PROJECT_NAME} PROPERTIES MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+    target_compile_definitions(${PROJECT_NAME} PRIVATE "_CRT_SECURE_NO_WARNINGS")
     # find_package(OpenGL REQUIRED)
     # target_include_directories(${PROJECT_NAME} PUBLIC ${OPENGL_INCLUDE_DIR})
     # target_link_libraries(${PROJECT_NAME} PUBLIC ${OPENGL_gl_LIBRARY})
