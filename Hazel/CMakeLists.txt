@@ -14,12 +14,12 @@ file (GLOB header_files "${source_dir}/*.h"
 target_sources(${PROJECT_NAME} PRIVATE ${source_files} ${header_files} ${events_header_files})
 
 if(WIN32)
-  target_sources(${PROJECT_NAME} PRIVATE "${source_dir}/Platform/Windows/WindowsWindow.cpp")
-  target_sources(${PROJECT_NAME} PRIVATE "${source_dir}/Platform/Windows/WindowsInput.cpp")
+  target_sources(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/src/Platform/Windows/WindowsWindow.cpp")
+  target_sources(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/src/Platform/Windows/WindowsInput.cpp")
 endif()
 if(UNIX AND NOT APPLE)
-  target_sources(${PROJECT_NAME} PRIVATE "${source_dir}/Platform/Linux/LinuxWindow.cpp")
-  target_sources(${PROJECT_NAME} PRIVATE "${source_dir}/Platform/Linux/LinuxInput.cpp")
+  target_sources(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/src/Platform/Linux/LinuxWindow.cpp")
+  target_sources(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/src/Platform/Linux/LinuxInput.cpp")
 endif()
 
 target_sources(${PROJECT_NAME} PRIVATE "${source_dir}/ImGui/ImGuiLayer.cpp"
