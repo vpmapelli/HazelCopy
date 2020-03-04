@@ -1,13 +1,13 @@
 [submodule "Hazel/vendor/spdlog"]
-	branch = v1.x
 	path = Hazel/vendor/spdlog
 	url = https://github.com/gabime/spdlog
+	branch = v1.x
 [submodule "Hazel/vendor/GLFW"]
 	branch = 3.3-stable
 	path = Hazel/vendor/GLFW
 	url = https://github.com/glfw/glfw
 [submodule "Hazel/vendor/imgui"]
-	branch = dockingCMake
+	branch = docking
 	path = Hazel/vendor/imgui
 	url = https://github.com/vpmapelli/imgui
 [submodule "Hazel/vendor/glm"]
