@@ -7,9 +7,11 @@ add_library(${PROJECT_NAME} STATIC)
 
 #FILES
 set (source_dir "${PROJECT_SOURCE_DIR}/src/${PROJECT_NAME}")
-file (GLOB source_files "${source_dir}/*.cpp")
+file (GLOB source_files "${source_dir}/*.cpp"
+                        "${source_dir}/Renderer/*.cpp")
 file (GLOB header_files "${source_dir}/*.h"
-                        "${source_dir}/Events/*.h")
+                        "${source_dir}/Events/*.h"
+                        "${source_dir}/Renderer/*.h")
 
 target_sources(${PROJECT_NAME} PRIVATE ${source_files} ${header_files} ${events_header_files})
 
