@@ -131,33 +131,29 @@ public:
             // m_Camera.SetRotation(45.0f);
         }        
 
-    void OnUpdate() override
+    void OnUpdate(Hazel::Timestep ts) override
     {
+        HZ_TRACE("Timestep {0}(s), {1}(ms)", ts.GetSeconds(), ts.GetMiliseconds());
+
+
         Hazel::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
         Hazel::RenderCommand::Clear();
 
-
-        glm::vec3 position = m_Camera.GetPosition();
-        float rotation = m_Camera.GetRotation();
-
-        float velocity = 0.1f;
-        float omega = 5.0f;
-
         if (Hazel::Input::IsKeyPressed(HZ_KEY_RIGHT))
-            position.x += velocity;
+            m_CameraPosition.x += m_CameraMoveSpeed * ts;
         if (Hazel::Input::IsKeyPressed(HZ_KEY_LEFT))
-            position.x -= velocity;
+            m_CameraPosition.x -= m_CameraMoveSpeed * ts;
         if (Hazel::Input::IsKeyPressed(HZ_KEY_UP))
-            position.y += velocity;
+            m_CameraPosition.y += m_CameraMoveSpeed * ts;
         if (Hazel::Input::IsKeyPressed(HZ_KEY_DOWN))
-            position.y -= velocity;
+            m_CameraPosition.y -= m_CameraMoveSpeed * ts;
         if (Hazel::Input::IsKeyPressed(HZ_KEY_A))
-            rotation += omega;
+            m_CameraRotation += m_CameraRotationSpeed * ts;
         if (Hazel::Input::IsKeyPressed(HZ_KEY_D))
-            rotation -= omega;
+            m_CameraRotation -= m_CameraRotationSpeed * ts;
 
-        m_Camera.SetPosition(position);
-        m_Camera.SetRotation(rotation);
+        m_Camera.SetPosition(m_CameraPosition);
+        m_Camera.SetRotation(m_CameraRotation);
 
         Hazel::Renderer::BeginScene(m_Camera);
 
@@ -180,6 +176,11 @@ private:
     std::shared_ptr<Hazel::VertexArray> m_SquareVA;
 
     Hazel::OrthographicCamera m_Camera;
+    glm::vec3 m_CameraPosition;
+    float m_CameraMoveSpeed = 1.0f;
+
+    float m_CameraRotation = 0.0f;
+    float m_CameraRotationSpeed = 180.0f;
 };
 class Sandbox : public Hazel::Application
 {

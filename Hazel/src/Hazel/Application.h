@@ -38,6 +38,7 @@ namespace Hazel {
         ImGuiLayer* m_ImGuiLayer;
         bool m_Running = true;
         LayerStack m_LayerStack;
+        float m_LastFrameTime = 0.0f;
     };
 
     // To be defined in CLIENT
