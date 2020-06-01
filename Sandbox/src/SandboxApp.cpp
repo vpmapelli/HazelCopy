@@ -2,6 +2,7 @@
 
 #include <hzpch.h>
 
+#include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 class ExampleLayer : public Hazel::Layer
 {
@@ -92,7 +93,7 @@ public:
             m_Shader.reset(new Hazel::Shader(vertexSrc, fragmentSrc));
 
 
-            std::string blueSquareVertexSrc = R"(
+            std::string flatColorVertexSrc = R"(
                 #version 330 core
 
                 layout(location = 0) in vec3 a_Position;
@@ -101,7 +102,6 @@ public:
                 uniform mat4 u_Transform;
 
                 out vec3 v_Position;
-                out vec4 v_Color;
 
                 void main()
                 {
@@ -111,26 +111,23 @@ public:
 
             )";
 
-            std::string blueSquarefragmentSrc = R"(
+            std::string flatColorFragmentSrc = R"(
                 #version 330 core
 
                 layout(location = 0) out vec4 color;
 
                 in vec3 v_Position;
                 in vec4 v_Color;
+                uniform vec4 u_Color;
 
                 void main()
                 {
-                    color = vec4(0.2, 0.3, 0.8, 1.0);
+                    color = u_Color;
                 }
 
             )";
 
-            m_BlueShader.reset(new Hazel::Shader(blueSquareVertexSrc, blueSquarefragmentSrc));
-
-
-            m_Camera.SetPosition({0.5f, 0.5f, 0.0f});
-            // m_Camera.SetRotation(45.0f);
+            m_FlatColorShader.reset(new Hazel::Shader(flatColorVertexSrc, flatColorFragmentSrc));
         }        
 
     void OnUpdate(Hazel::Timestep ts) override
@@ -161,14 +158,26 @@ public:
 
         glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
+        glm::vec4 redColor(1.0f, 0.0f, 0.0f, 1.0f);
+        glm::vec4 blueColor(0.0f, 0.0f, 1.0f, 1.0f);
+
+
         for (int j=0; j<20; j++)
         {
            for (int i=0; i<20; i++) 
             {
                 glm::vec3 pos(0.11f * i, 0.11f * j, 1.0f);
-
                 glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
-                Hazel::Renderer::Submit(m_BlueShader, m_SquareVA, transform);
+                if (i%2 == 0)
+                {
+                    m_FlatColorShader->UploadUniformFloat4("u_Color", blueColor);
+                }
+                else
+                {
+                    m_FlatColorShader->UploadUniformFloat4("u_Color", redColor);
+                }
+                Hazel::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
+
             }
         }
         
@@ -187,14 +196,13 @@ private:
     std::shared_ptr<Hazel::Shader> m_Shader;
     std::shared_ptr<Hazel::VertexArray> m_VertexArray;
 
-    std::shared_ptr<Hazel::Shader> m_BlueShader;
+    std::shared_ptr<Hazel::Shader> m_FlatColorShader;
     std::shared_ptr<Hazel::VertexArray> m_SquareVA;
 
     Hazel::OrthographicCamera m_Camera;
     glm::vec3 m_CameraPosition;
     glm::vec3 m_SquarePosition;
     float m_CameraMoveSpeed = 1.0f;
-    float m_SquareMoveSpeed = 1.0f;
 
     float m_CameraRotation = 0.0f;
     float m_CameraRotationSpeed = 180.0f;
