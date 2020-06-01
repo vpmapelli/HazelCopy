@@ -13,6 +13,7 @@ target_sources(${PROJECT_NAME} PRIVATE ${source_files} ${header_files})
 
 #INCLUDE DIRS
 target_include_directories(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/../Hazel/src/")
+target_include_directories(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/../Hazel/vendor/")
 
 #LINKING
 target_link_libraries(${PROJECT_NAME} Hazel)

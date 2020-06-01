@@ -27,7 +27,8 @@ endif()
 target_sources(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/src/Platform/OpenGL/OpenGLContext.cpp"
                                        "${PROJECT_SOURCE_DIR}/src/Platform/OpenGL/OpenGLBuffer.cpp"
                                        "${PROJECT_SOURCE_DIR}/src/Platform/OpenGL/OpenGLRendererAPI.cpp"
-                                       "${PROJECT_SOURCE_DIR}/src/Platform/OpenGL/OpenGLVertexArray.cpp")
+                                       "${PROJECT_SOURCE_DIR}/src/Platform/OpenGL/OpenGLVertexArray.cpp"
+                                       "${PROJECT_SOURCE_DIR}/src/Platform/OpenGL/OpenGLShader.cpp")
 
 target_sources(${PROJECT_NAME} PRIVATE "${source_dir}/ImGui/ImGuiLayer.cpp"
                                         "${source_dir}/ImGui/ImGuiLayer.h"
