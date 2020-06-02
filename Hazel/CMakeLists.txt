@@ -28,6 +28,7 @@ target_sources(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/src/Platform/OpenG
                                        "${PROJECT_SOURCE_DIR}/src/Platform/OpenGL/OpenGLBuffer.cpp"
                                        "${PROJECT_SOURCE_DIR}/src/Platform/OpenGL/OpenGLRendererAPI.cpp"
                                        "${PROJECT_SOURCE_DIR}/src/Platform/OpenGL/OpenGLVertexArray.cpp"
+                                       "${PROJECT_SOURCE_DIR}/src/Platform/OpenGL/OpenGLTexture.cpp"
                                        "${PROJECT_SOURCE_DIR}/src/Platform/OpenGL/OpenGLShader.cpp")
 
 target_sources(${PROJECT_NAME} PRIVATE "${source_dir}/ImGui/ImGuiLayer.cpp"
@@ -74,6 +75,10 @@ target_link_libraries(Hazel PRIVATE imgui)
 add_subdirectory("${PROJECT_SOURCE_DIR}/vendor/glm")
 target_link_libraries(Hazel PUBLIC glm)
 #making it public since we are using as a header library. It automatically includes in Sandbox 
+
+#stb_image
+add_subdirectory("${PROJECT_SOURCE_DIR}/vendor/stb_image")
+target_link_libraries(Hazel PUBLIC stb_image)
 
 if (WIN32)
     set_target_properties(${PROJECT_NAME} PROPERTIES MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")

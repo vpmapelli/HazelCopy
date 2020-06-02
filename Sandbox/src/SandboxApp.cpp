@@ -1,6 +1,7 @@
 #include <Hazel.h>
 
 #include "Platform/OpenGL/OpenGLShader.h"
+// #include "Platform/OpenGL/OpenGLTexture.h"
 
 #include <imgui/imgui.h>
 
@@ -41,17 +42,20 @@ public:
 
             m_SquareVA.reset(Hazel::VertexArray::Create());
 
-            float squareVertices[3 * 4] = {
-                -0.5f, -0.5f, 0.0f,
-                 0.5f, -0.5f, 0.0f,
-                 0.5f,  0.5f, 0.0f,
-                -0.5f,  0.5f, 0.0f,
+            float squareVertices[5 * 4] = {
+                -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+                 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+                 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+                -0.5f,  0.5f, 0.0f, 0.0f, 1.0f
             };
+
             Hazel::Ref<Hazel::VertexBuffer> squareVB;
             squareVB.reset(Hazel::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
-            squareVB->SetLayout( {
+            layout = {
                 { Hazel::ShaderDataType::Float3, "a_Position"},
-            });
+                { Hazel::ShaderDataType::Float2, "a_TexCoords"}
+            };
+            squareVB->SetLayout(layout);
             m_SquareVA->AddVertexBuffer(squareVB);
 
             unsigned int squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
@@ -102,6 +106,7 @@ public:
                 #version 330 core
 
                 layout(location = 0) in vec3 a_Position;
+                layout(location = 1) in vec2 a_TexCoords;
 
                 uniform mat4 u_ViewProjectionMatrix;
                 uniform mat4 u_Transform;
@@ -122,7 +127,6 @@ public:
                 layout(location = 0) out vec4 color;
 
                 in vec3 v_Position;
-                in vec4 v_Color;
                 uniform vec3 u_Color;
 
                 void main()
@@ -133,6 +137,47 @@ public:
             )";
 
             m_FlatColorShader.reset(Hazel::Shader::Create(flatColorVertexSrc, flatColorFragmentSrc));
+
+            std::string textureVertexSrc = R"(
+                #version 330 core
+
+                layout(location = 0) in vec3 a_Position;
+                layout(location = 1) in vec2 a_TexCoords;
+
+                uniform mat4 u_ViewProjectionMatrix;
+                uniform mat4 u_Transform;
+
+                out vec2 v_TexColors;
+
+                void main()
+                {
+                    v_TexColors = a_TexCoords;
+                    gl_Position = u_ViewProjectionMatrix * u_Transform * vec4(a_Position, 1.0);
+                }
+
+            )";
+
+            std::string textureFragmentSrc = R"(
+                #version 330 core
+
+                layout(location = 0) out vec4 color;
+
+                in vec2 v_TexColors;
+                uniform sampler2D u_Texture;
+
+                void main()
+                {
+                    color = texture(u_Texture, v_TexColors);
+                }
+
+            )";
+
+            m_TextureShader.reset(Hazel::Shader::Create(textureVertexSrc, textureFragmentSrc));
+
+            m_Texture = Hazel::Texture2D::Create("./assets/textures/CheckerBoard.png");
+
+            std::dynamic_pointer_cast<Hazel::OpenGLShader>(m_TextureShader)->Bind();
+            std::dynamic_pointer_cast<Hazel::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
         }        
 
     void OnUpdate(Hazel::Timestep ts) override
@@ -163,6 +208,8 @@ public:
 
         glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
+        // As shown, it also works without dynamic casting.
+        // m_FlatColorShader->Bind();
         std::dynamic_pointer_cast<Hazel::OpenGLShader>(m_FlatColorShader)->Bind();
         std::dynamic_pointer_cast<Hazel::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
 
@@ -175,9 +222,17 @@ public:
                 Hazel::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
             }
         }
-        
 
-        Hazel::Renderer::Submit(m_Shader, m_VertexArray);
+        //Both lines below work. Not still sure why, but dynamic casting seems more correct(?)
+        // Cherno uses without dynamic casting for textures. In this case, it is not needed to included
+        // OpenGLTexture.h file
+        m_Texture->Bind();
+        //  std::dynamic_pointer_cast<Hazel::OpenGLTexture2D>(m_Texture)->Bind();
+
+        Hazel::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f) ) );
+
+        // Triangle
+        // Hazel::Renderer::Submit(m_Shader, m_VertexArray);
 
         Hazel::Renderer::EndScene();
     }
@@ -200,6 +255,9 @@ private:
 
     Hazel::Ref<Hazel::Shader> m_FlatColorShader;
     Hazel::Ref<Hazel::VertexArray> m_SquareVA;
+    Hazel::Ref<Hazel::Texture2D> m_Texture;
+
+    Hazel::Ref<Hazel::Shader> m_TextureShader;
 
     Hazel::OrthographicCamera m_Camera;
     glm::vec3 m_CameraPosition;

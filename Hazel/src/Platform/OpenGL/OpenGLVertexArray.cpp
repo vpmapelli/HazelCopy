@@ -21,7 +21,9 @@ namespace Hazel {
             case ShaderDataType::Int4:      return GL_INT;
             case ShaderDataType::Bool:      return GL_BOOL;
         }
-    }
+        HZ_CORE_ASSERT(false, "Type unknown");
+        return 0;
+    };
 
     OpenGLVertexArray::~OpenGLVertexArray()
     {
