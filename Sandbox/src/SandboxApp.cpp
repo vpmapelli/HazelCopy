@@ -99,7 +99,7 @@ public:
 
             )";
 
-            m_Shader.reset(Hazel::Shader::Create(vertexSrc, fragmentSrc));
+            m_Shader = Hazel::Shader::Create("VertexPosColor", vertexSrc, fragmentSrc);
 
 
             std::string flatColorVertexSrc = R"(
@@ -136,12 +136,15 @@ public:
 
             )";
 
-            m_FlatColorShader.reset(Hazel::Shader::Create(flatColorVertexSrc, flatColorFragmentSrc));
+            m_FlatColorShader = Hazel::Shader::Create("FlatColor", flatColorVertexSrc, flatColorFragmentSrc);
 
-            m_TextureShader.reset(Hazel::Shader::Create("./assets/shaders/TextureShader.glsl"));
+            auto textureShader = m_ShaderLibrary.Load("./assets/shaders/TextureShader.glsl");
 
             m_Texture = Hazel::Texture2D::Create("./assets/textures/CheckerBoard.png");
             m_ChernoLogoTexture = Hazel::Texture2D::Create("./assets/textures/ChernoLogo.png");
+
+            std::dynamic_pointer_cast<Hazel::OpenGLShader>(textureShader)->Bind();
+            std::dynamic_pointer_cast<Hazel::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
         }        
 
     void OnUpdate(Hazel::Timestep ts) override
@@ -187,16 +190,18 @@ public:
             }
         }
 
+        auto textureShader = m_ShaderLibrary.Get("TextureShader");
+
         //Both lines below work. Not still sure why, but dynamic casting seems more correct(?)
         // Cherno uses without dynamic casting for textures. In this case, it is not needed to included
         // OpenGLTexture.h file
         m_Texture->Bind();
         //  std::dynamic_pointer_cast<Hazel::OpenGLTexture2D>(m_Texture)->Bind();
 
-        Hazel::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f) ) );
+        Hazel::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f) ) );
 
         m_ChernoLogoTexture->Bind();
-        Hazel::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f) ) );
+        Hazel::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f) ) );
 
 
         // Triangle
@@ -218,6 +223,7 @@ public:
     }
 
 private:
+    Hazel::ShaderLibrary m_ShaderLibrary;
     Hazel::Ref<Hazel::Shader> m_Shader;
     Hazel::Ref<Hazel::VertexArray> m_VertexArray;
 
@@ -225,8 +231,6 @@ private:
     Hazel::Ref<Hazel::VertexArray> m_SquareVA;
     Hazel::Ref<Hazel::Texture2D> m_Texture;
     Hazel::Ref<Hazel::Texture2D> m_ChernoLogoTexture;
-
-    Hazel::Ref<Hazel::Shader> m_TextureShader;
 
     Hazel::OrthographicCamera m_Camera;
     glm::vec3 m_CameraPosition;
