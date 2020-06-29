@@ -12,6 +12,7 @@
 
 #include "Hazel/ImGui/ImGuiLayer.h"
 #include "Hazel/Core/Timestep.h"
+#include "Hazel/OrthographicCameraController.h"
 
 // Renderer
 
