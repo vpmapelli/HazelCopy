@@ -5,7 +5,7 @@
 
 #include "Window.h"
 
-#include "LayerStack.h"
+#include "Hazel/Core/LayerStack.h"
 
 #include "Hazel/ImGui/ImGuiLayer.h"
 

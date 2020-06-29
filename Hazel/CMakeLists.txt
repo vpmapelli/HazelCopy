@@ -7,9 +7,9 @@ add_library(${PROJECT_NAME} STATIC)
 
 #FILES
 set (source_dir "${PROJECT_SOURCE_DIR}/src/${PROJECT_NAME}")
-file (GLOB source_files "${source_dir}/*.cpp"
+file (GLOB source_files "${source_dir}/Core/*.cpp"
                         "${source_dir}/Renderer/*.cpp")
-file (GLOB header_files "${source_dir}/*.h"
+file (GLOB header_files "${source_dir}/Core/*.h"
                         "${source_dir}/Events/*.h"
                         "${source_dir}/Renderer/*.h")
 
@@ -44,9 +44,9 @@ target_include_directories(${PROJECT_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/src/")
 target_include_directories(${PROJECT_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/vendor/spdlog/include/")
 
 #DEFINITIONS
-target_compile_definitions(${PROJECT_NAME} PRIVATE "HZ_PLATFORM_$<UPPER_CASE:$<PLATFORM_ID>>")
+# target_compile_definitions(${PROJECT_NAME} PRIVATE "HZ_PLATFORM_$<UPPER_CASE:$<PLATFORM_ID>>")
 target_compile_definitions(${PROJECT_NAME} PRIVATE "HZ_$<UPPER_CASE:$<CONFIG>>")
-target_compile_definitions(${PROJECT_NAME} PRIVATE HZ_BUILD_DLL)
+# target_compile_definitions(${PROJECT_NAME} PRIVATE HZ_BUILD_DLL) #changed to static linking
 #target_compile_definitions(${PROJECT_NAME} PRIVATE IMGUI_IMPL_OPENGL_LOADER_GLAD)
 
 # add_custom_target(print

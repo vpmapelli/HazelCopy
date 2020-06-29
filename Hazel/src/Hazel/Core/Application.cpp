@@ -1,18 +1,18 @@
-#include "Application.h"
-#include "Hazel/Log.h"
+#include "Hazel/Core/Application.h"
+#include "Hazel/Core/Log.h"
 
 #include <GLFW/glfw3.h>
 
-#include "Renderer/Renderer.h"
+#include "Hazel/Renderer/Renderer.h"
 
 #include "Hazel/Events/KeyEvent.h"
 #include "Hazel/Events/MouseEvent.h"
 #include "Hazel/Events/ApplicationEvent.h"
 
-#include "Hazel/Layer.h"
-#include "Hazel/LayerStack.h"
+#include "Hazel/Core/Layer.h"
+#include "Hazel/Core/LayerStack.h"
 
-#include "Input.h"
+#include "Hazel/Core/Input.h"
 
 #include "Hazel/Core/Timestep.h"
 
