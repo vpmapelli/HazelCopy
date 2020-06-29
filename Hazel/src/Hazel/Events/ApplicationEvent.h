@@ -35,6 +35,19 @@ namespace Hazel {
         EVENT_CLASS_CATEGORY(EventCategoryApplication)
     };
 
+    class HAZEL_API WindowMinimizeEvent : public Event
+    {
+    public:
+        WindowMinimizeEvent(bool minimized)
+            : m_Minimized(minimized) {}
+
+        inline bool IsMinimized() { return m_Minimized; }
+
+        EVENT_CLASS_TYPE(WindowMinimize)
+        EVENT_CLASS_CATEGORY(EventCategoryApplication)
+    private:
+        bool m_Minimized;
+    };
     class HAZEL_API AppTickEvent : public Event
     {
     public:

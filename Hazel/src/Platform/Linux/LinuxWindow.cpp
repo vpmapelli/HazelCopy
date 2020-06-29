@@ -103,6 +103,21 @@ namespace Hazel
             data.EventCallback(event);
         });
 
+        glfwSetWindowIconifyCallback(m_Window, [](GLFWwindow* window, int minimized){
+
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            if (minimized == GL_TRUE)
+            {
+                WindowMinimizeEvent event(true);
+                data.EventCallback(event);
+            }
+            else
+            {
+                WindowMinimizeEvent event(false);
+                data.EventCallback(event);
+            }            
+        });
+
         glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height){
             
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);

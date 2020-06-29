@@ -52,7 +52,8 @@ namespace Hazel {
     bool OrthographicCameraController::OnWindowResize(WindowResizeEvent& e)
     {
         m_Ratio = (float)e.GetWidth() / (float) e.GetHeight();
-        m_Camera.SetProjection(-m_ZoomLevel*m_Ratio, m_ZoomLevel*m_Ratio, -m_ZoomLevel, m_ZoomLevel);
+        float heightAdjustment = (float)e.GetHeight() /720.0f;
+        m_Camera.SetProjection(-m_ZoomLevel*m_Ratio*heightAdjustment, m_ZoomLevel*m_Ratio*heightAdjustment, -m_ZoomLevel*heightAdjustment, m_ZoomLevel*heightAdjustment);
         return false;        
     }
 }
