@@ -238,5 +238,9 @@ namespace Hazel
         glUniform1i(Location, value);
     }
 
+    void OpenGLShader::SetInt(const std::string &name, int value){
+        UploadUniformInt(name, value);
+    }
+
 } // namespace Hazel
 

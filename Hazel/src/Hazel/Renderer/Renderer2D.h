@@ -2,6 +2,8 @@
 
 #include "OrthographicCamera.h"
 
+#include "Texture.h"
+
 namespace Hazel {
 
     class Renderer2D
@@ -16,6 +18,8 @@ namespace Hazel {
         //Primitives
         static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color, float Rotation = 0);
         static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, float Rotation = 0);
+        static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, float Rotation = 0);
+        static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float Rotation = 0);
     private:
     };
 }
