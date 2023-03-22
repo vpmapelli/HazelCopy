@@ -22,6 +22,13 @@ private:
     Hazel::Ref<Hazel::Shader> m_FlatColorShader;
 
     Hazel::Ref<Hazel::Texture2D> m_CheckerBoardTexture;
+
+    struct ProfilingResult {
+      const char* Name;
+      float Result;
+    };
+
+    std::vector<ProfilingResult> m_ProfilingResults;
     
     glm::vec4 m_SquareColor = { 0.2f, 0.5f, 0.8f, 1.0f };
 };
